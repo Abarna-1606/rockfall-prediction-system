@@ -21,7 +21,8 @@ public class BackendApplication {
                 registry.addMapping("/**")
                     .allowedOrigins(
   "http://localhost:3000",
-  "https://rockfall-frontend.onrender.com"
+  "https://rockfall-frontend.onrender.com",
+  "https://rockfall-frontend-2l1i.onrender.com"
 )
                     .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
                     .allowedHeaders("*");
