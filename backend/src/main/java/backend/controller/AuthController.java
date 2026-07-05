@@ -43,8 +43,8 @@ public ResponseEntity<?> register(@RequestBody User user) {
         return ResponseEntity.status(400)
             .body(Map.of("message", "Email already exists"));
     }
+    user.setId(null);
     userRepository.save(user);
     return ResponseEntity.ok(
         Map.of("message", "Registration successful"));
-}
 }
