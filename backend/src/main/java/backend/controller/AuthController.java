@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -36,15 +36,27 @@ public class AuthController {
                 .body(Map.of("message", "Invalid email or password"));
         }
     }
+
     @PostMapping("/register")
-public ResponseEntity<?> register(@RequestBody User user) {
-    if (userRepository.findByEmail(
-            user.getEmail()).isPresent()) {
-        return ResponseEntity.status(400)
-            .body(Map.of("message", "Email already exists"));
+    public ResponseEntity<?> register(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String name = body.get("name");
+        String password = body.get("password");
+        String role = body.getOrDefault("role", "OPERATOR");
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            return ResponseEntity.status(400)
+                .body(Map.of("message", "Email already exists"));
+        }
+
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRole(role);
+
+        userRepository.save(user);
+        return ResponseEntity.ok(
+            Map.of("message", "Registration successful"));
     }
-    user.setId(null);
-    userRepository.save(user);
-    return ResponseEntity.ok(
-        Map.of("message", "Registration successful"));
 }
