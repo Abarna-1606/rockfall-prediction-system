@@ -27,7 +27,7 @@ export default function Register() {
     }
     try {
       await axios.post(
-        'http://localhost:8080/api/auth/register', {
+  'https://rockfall-backend-0mqf.onrender.com/api/auth/register', {
         name: form.name,
         email: form.email,
         password: form.password,
